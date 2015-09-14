@@ -1,0 +1,32 @@
+{
+  "manifest_version": 2,
+  "name": "Redirect",
+  "version": "0.0.1",
+  "minimum_chrome_version" : "45.0.2454.85",
+  "description": "An simple tool to reduce the time to mock the data locally without changing the api address in the code for web front-end developer. ",
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_title": "Redirect",
+    "default_popup": "popup.html"
+  },
+  "icons":{
+    "16": "icon.png",
+    "48": "icon.png"
+  },
+  "options_page": "options.html",
+  "options_ui": {
+    "page": "options.html"
+  },
+  "permissions": [
+    "activeTab",
+    "<all_urls>",
+    "webRequest",
+    "webRequestBlocking",
+    "storage",
+    "downloads"
+  ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  }
+}

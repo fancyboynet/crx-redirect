@@ -1,0 +1,56 @@
+body{
+  min-width: 1200px;
+}
+.alert{
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  text-align: center;
+  z-index: 100;
+}
+.navbar{
+  border-radius: 0;
+}
+.main{
+  display: flex;
+}
+.categories{
+  flex: 3;
+  margin: 0 10px 0 0;
+}
+.categories .list-group{
+  margin: 20px 0;
+}
+.rules{
+  flex: 9;
+}
+.thead{
+  text-align: center;
+  font-weight: bold;
+  margin: 0 0 20px;
+  line-height: 3em;
+  border-bottom: 1px solid #ddd;
+}
+.list-group-item.active{
+  z-index: auto !important;
+}
+.rules li{
+  padding: 10px 15px;
+  /*margin-bottom: -1px;*/
+  /*background-color: #fff;*/
+  border-bottom: 1px solid #ddd;
+  margin: 0;
+}
+.dropdown-menu a{
+  cursor: pointer;
+  position: relative;
+}
+input[type=file]{
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  cursor: pointer;
+}

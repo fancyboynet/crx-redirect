@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="options.css"/>
+</head>
+<body>
+    <div class="alert alert-danger" role="alert" id="alert-danger"></div>
+    <div class="alert alert-success" role="alert" id="alert-success"></div>
+
+    <nav class="navbar navbar-inverse">
+        <div class="container">
+            <h1 class="navbar-text">Redirect</h1>
+            <div class="navbar-right">
+                <!-- Single button -->
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle navbar-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="glyphicon glyphicon-list"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a id="btnExport">export</a></li>
+                        <li><a>import<input type="file" id="fileInput"></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="main container">
+        <div class="categories">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">All category</h3>
+                </div>
+                <ul class="list-group" id="categoryList">
+                </ul>
+                <div class="panel-footer clearfix">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="New category" id="inputAddCategory">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" id="btnAddCategory">Add</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="rules">
+            <div class="panel panel-default rule">
+                <div class="panel-heading">
+                    <h3 class="panel-title" id="categoryName"></h3>
+                </div>
+                <div class="panel-body">
+                    <div class="thead row">
+                        <div class="col-md-4">Request</div>
+                        <div class="col-md-4">Response</div>
+                        <div class="col-md-4">Handler</div>
+                    </div>
+                    <ul class="list-unstyled" id="ruleList">
+                    </ul>
+                </div>
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" placeholder="regex" id="inputAddRequest">
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" placeholder="url" id="inputAddResponse">
+                        </div>
+                        <div class="col-md-4">
+                            <div class="btn-group btn-group-justified" role="group">
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-default" id="btnAddRule">Add</button>
+                                </div>
+                                <div class="btn-group" role="group">
+                                    <button type="submit" class="btn btn-primary" id="btnSaveAll">Save All</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script type="template" id="tplCategory">
+    <li class="list-group-item">
+        <div class="input-group">
+            <input type="text" class="form-control inputName" disabled value="">
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-default btn-edit">Edit</button>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="btn-disable">Disable</a></li>
+                    <li><a class="btn-del">Del</a></li>
+                </ul>
+            </div>
+        </div>
+    </li>
+</script>
+<script type="template" id="tplRule">
+    <li class="row">
+        <div class="col-md-4">
+            <input type="text" class="form-control inputRequest" placeholder="regex" disabled>
+        </div>
+        <div class="col-md-4">
+            <input type="text" class="form-control inputResponse" placeholder="url" disabled>
+        </div>
+        <div class="col-md-4">
+            <div class="btn-group btn-group-justified" role="group">
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-default btn-edit">Edit</button>
+                </div>
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-default btn-disable">Disable</button>
+                </div>
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-default btn-del">Del</button>
+                </div>
+            </div>
+        </div>
+    </li>
+</script>
+<script src="js/jquery-2.1.4.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="options.js"></script>
+</body>
+</html>
