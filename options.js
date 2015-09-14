@@ -223,7 +223,11 @@
             $.each(defaultData, function(i, v){
                 self._$categoryList.append(self._createOne(v));
             });
-            rule.update(name);
+            if(name){
+                rule.update(name);
+                return;
+            }
+            rule.update(self.get().name);
         }
     };
     var rule = {
@@ -244,10 +248,10 @@
             $('#btnAddRule').on('click', function(){
                 var request = $inputAddRequest.val();
                 var response = $inputAddResponse.val();
-                if(self._add(self._getCategory(), request, response, true)){
+                if(self._add(self.getCategory(), request, response, true)){
                     $inputAddRequest.val('');
                     $inputAddResponse.val('');
-                    self.update(self._getCategory());
+                    self.update(self.getCategory());
                 }
             });
         },
@@ -286,7 +290,7 @@
         _toSaveEdit : function($one){
             var self = this;
             var request = $one.attr('data-request');
-            if(self._edit(self._getCategory(), request, $one.find('.inputRequest').val(), $one.find('.inputResponse').val())){
+            if(self._edit(self.getCategory(), request, $one.find('.inputRequest').val(), $one.find('.inputResponse').val())){
                 $one.removeClass('edit');
                 $one.find('.inputRequest').attr('disabled', '');
                 $one.find('.inputResponse').attr('disabled', '');
@@ -298,17 +302,17 @@
             var request = $one.attr('data-request');
             if($one.hasClass('disabled')){
                 $one.removeClass('disabled').find('.btn-disable').text('Disable').addClass('btn-primary');
-                self._edit(self._getCategory(), request, '', '', true);
+                self._edit(self.getCategory(), request, '', '', true);
                 return;
             }
             $one.addClass('disabled').find('.btn-disable').text('Enable').removeClass('btn-primary');
-            self._edit(self._getCategory(), request, '', '', false);
+            self._edit(self.getCategory(), request, '', '', false);
         },
         _toDel : function($one){
             var self = this;
             var request = $one.attr('data-request');
             $one.remove();
-            self._del(self._getCategory(), request);
+            self._del(self.getCategory(), request);
         },
         get : function(name, request){
             var rule = null;
@@ -398,7 +402,7 @@
         remove : function(name){
             var self = this;
             var c;
-            if(name !== self._getCategory()){
+            if(name !== self.getCategory()){
                 return;
             }
             self.update();
@@ -406,18 +410,18 @@
         update : function(name){
             var self = this;
             var c = category.get(name);
+            self._c = name;
             self.setCategory(c.name);
             self._$ruleList.empty();
             $.each(c.map, function(i, v){
                 self._$ruleList.append(self._createOne(v));
             });
         },
-        _getCategory : function(){
+        getCategory : function(){
             return this._c;
         },
         setCategory : function(name){
             var self = this;
-            self._c = name;
             self._$categoryName.text(name);
         }
     };
@@ -430,8 +434,14 @@
             $('#fileInput').on('change', function(e){
                 self._toImport(e);
             });
+            $('#btnExportAll').on('click', function(){
+                self._toExport(true);
+            });
+            $('#fileInputAll').on('change', function(e){
+                self._toImport(e, true);
+            });
         },
-        _toExport : function(){
+        _toExport : function(isAll){
             function saveAs(blob, filename) {
                 var type = blob.type;
                 var force_saveable_type = 'application/octet-stream';
@@ -452,14 +462,29 @@
             }
 
             var URL = URL || webkitURL || window;
-            var bb = new Blob([JSON.stringify(defaultData, null, '\t')], {type: 'text/json'});
-            saveAs(bb, 'redirect.json');
+            var saveData;
+            var fileName;
+            if(isAll){
+                saveData = defaultData;
+                fileName = 'redirect.json';
+            }
+            else{
+                fileName = rule.getCategory() + '.json';
+                saveData = [category.get(rule.getCategory())];
+            }
+            var bb = new Blob([JSON.stringify(saveData, null, '\t')], {type: 'text/json'});
+            saveAs(bb, fileName);
         },
-        _toImport : function(e){
+        _toImport : function(e, isAll){
             var reader = new FileReader();
             reader.onload = function(e) {
                 try{
-                    defaultData = JSON.parse(reader.result);
+                    if(isAll){
+                        defaultData = JSON.parse(reader.result);
+                    }
+                    else{
+                        defaultData = defaultData.concat(JSON.parse(reader.result));
+                    }
                     category.update();
                 }catch(e){
 
