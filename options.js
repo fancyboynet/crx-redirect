@@ -151,7 +151,7 @@
             if(!category){
                 return false;
             }
-            defaultData.splice(sel.getIndex(name), 1);
+            defaultData.splice(self.getIndex(name), 1);
             return true;
         },
         _toEdit : function($one){
