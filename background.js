@@ -12,7 +12,7 @@
         return result;
     };
     var parse = function(url){
-        var result = true;
+        var result;
         data.every(function(el, index, array){
             if(!el.enable){
                 return true;
