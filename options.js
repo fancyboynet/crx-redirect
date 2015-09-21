@@ -157,7 +157,6 @@
         _toEdit : function($one){
             var self = this;
             var name = $one.attr('data-name');
-            rule.update(name);
             if($one.hasClass('edit')){
                 self._toSaveEdit($one);
                 return;
@@ -185,9 +184,18 @@
                 rule.remove(name);
             }
         },
+        _toShow : function($one){
+            var self = this;
+            var name = $one.attr('data-name');
+            $one.addClass('current').siblings().removeClass('current');
+            rule.update(name);
+        },
         _render : function(){
             var self = this;
             self._$categoryList
+                .on('click', '.list-group-item', function(){
+                    self._toShow($(this));
+                })
                 .on('click', '.btn-edit', function(){
                     self._toEdit($(this).closest('.list-group-item'));
                 })
@@ -223,11 +231,9 @@
             $.each(defaultData, function(i, v){
                 self._$categoryList.append(self._createOne(v));
             });
-            if(name){
-                rule.update(name);
-                return;
-            }
-            rule.update(self.get().name);
+            name = name || self.get().name;
+            rule.update(name);
+            self._$categoryList.find('li[data-name=' + name + ']').addClass('current')
         }
     };
     var rule = {
@@ -401,7 +407,6 @@
         },
         remove : function(name){
             var self = this;
-            var c;
             if(name !== self.getCategory()){
                 return;
             }
